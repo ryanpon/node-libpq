@@ -37,6 +37,7 @@ NAN_MODULE_INIT(InitAddon) {
   Nan::SetPrototypeMethod(tpl, "$isBusy", Connection::IsBusy);
   Nan::SetPrototypeMethod(tpl, "$setNonBlocking", Connection::SetNonBlocking);
   Nan::SetPrototypeMethod(tpl, "$isNonBlocking", Connection::IsNonBlocking);
+  Nan::SetPrototypeMethod(tpl, "$setSingleRowMode", Connection::SetSingleRowMode);
   Nan::SetPrototypeMethod(tpl, "$flush", Connection::Flush);
 
   //result accessor functions

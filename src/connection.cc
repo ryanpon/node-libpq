@@ -333,6 +333,15 @@ NAN_METHOD(Connection::ResultErrorFields) {
   info.GetReturnValue().Set(result);
 }
 
+NAN_METHOD(Connection::SetSingleRowMode) {
+  TRACE("Connection::SetSingleRowMode");
+
+  Connection *self = THIS();
+
+  int success = PQsetSingleRowMode(self->pq);
+  info.GetReturnValue().Set(success == 1);
+}
+
 NAN_METHOD(Connection::SendQuery) {
   TRACE("Connection::SendQuery");
 

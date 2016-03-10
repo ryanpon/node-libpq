@@ -295,6 +295,12 @@ PQ.prototype.isNonBlocking = function() {
   return this.$isNonBlocking();
 };
 
+//turns on single row mode
+//returns true if single row mode was turned on, false if not
+PQ.prototype.setSingleRowMode = function() {
+  return this.$setSingleRowMode();
+};
+
 //returns 1 if socket is not write-ready
 //returns 0 if all data flushed to socket
 //returns -1 if there is an error

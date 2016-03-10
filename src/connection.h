@@ -33,6 +33,7 @@ class Connection : public Nan::ObjectWrap {
     static NAN_METHOD(SendQueryParams);
     static NAN_METHOD(SendPrepare);
     static NAN_METHOD(SendQueryPrepared);
+    static NAN_METHOD(SetSingleRowMode);
     static NAN_METHOD(GetResult);
     static NAN_METHOD(ConsumeInput);
     static NAN_METHOD(IsBusy);

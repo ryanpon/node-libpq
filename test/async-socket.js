@@ -39,6 +39,29 @@ describe('async simple query', function() {
     });
   });
 
+  it('dispatches simple query in single row mode', function(done) {
+    var pq = this.pq;
+    assert(this.pq.setNonBlocking(true));
+    this.pq.writable(function() {
+      var success = pq.sendQuery('SELECT num FROM generate_series(0, 100) num', true);
+      assert.strictEqual(pq.setSingleRowMode(), true);
+      assert.strictEqual(pq.flush(), 0, 'Should have flushed all data to socket');
+      assert(success, pq.errorMessage());
+      consume(pq, function() {
+        assert.ifError(pq.errorMessage());
+        var i = 0;
+        while (pq.getResult() && pq.resultStatus() === 'PGRES_SINGLE_TUPLE') {
+          assert.strictEqual(pq.getvalue(0, 0), String(i++));
+        }
+        assert.strictEqual(i - 1, 100);
+        assert.strictEqual(pq.getResult(), false);
+        assert.strictEqual(pq.getvalue(0, 0), null);
+        assert.strictEqual(pq.resultStatus(), 'PGRES_TUPLES_OK');
+        done();
+      });
+    });
+  });
+
   it('dispatches parameterized query', function(done) {
     var pq = this.pq;
     var success = pq.sendQueryParams('SELECT $1::text as name', ['Brian']);
